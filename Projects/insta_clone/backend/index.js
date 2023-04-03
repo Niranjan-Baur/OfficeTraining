@@ -66,34 +66,14 @@ app.get("/likecnt/:id", (req,res) => {
 
 app.post("/register", (req, res) => {
   const q = "INSERT INTO users (`username`,`email`, `password`) VALUES (?)";
-  const login = "SELECT * FROM users WHERE email =? AND password =?";
   const values = [req.body.username, req.body.email, req.body.password];
 
   db.query(q, [values], (err, data) => {
 
     if (err) return res.json(err);
     // console.log(data);
-    // return res.send(data);
+    return res.send(data);
   });
- 
-  // const user = [req.body.email, req.body.password]
-
-  const email = req.body.email;
-  const password = req.body.password;
-
-  db.query(login, [email,password], (err, data) => {
-    if (err) {
-      return res.send({ err: err });
-    }
-
-    if (data.length > 0) {
-      res.send({ data, message: "Logged in successfully" });
-    } else {
-      res.send({ message: "Invalid Credentials" });
-    }
-  });
-
-
 });
 
 app.post("/login", (req, res) => {
@@ -115,7 +95,7 @@ app.post("/login", (req, res) => {
 });
 
 //Hello guys this is my first post on Instagram.
-app.post("/createpost", (req, res) => {
+app.post("/createpost", (req, res) => { 
   console.log(req)
   const q = "INSERT INTO post (`post_img`,`post_desc`,`post_create_date`,`userId`) VALUES (?)";
   const values = [req.body.url, req.body.description,req.body.createdDate,req.body.userID];
@@ -138,7 +118,19 @@ app.post("/likeclicked",(req,res)=>{
     if (err) return res.json(err);
     return res.send(data);
   });
+  // console.log(req);
+}) 
 
+app.post("/dislikeclicked",(req,res)=>{
+  const q = `DELETE FROM likes where userId = ${req.body.userId} AND postId = ${req.body.postId}` ;
+  // const values = [req.body.userId,req.body.userId]
+
+   db.query(q, (err, data) => {
+    if (err) return res.json(err);
+
+    console.log(data);
+    return res.send(data);
+  });
   // console.log(req);
 }) 
 

@@ -13,6 +13,7 @@ import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { red } from "@mui/material/colors";
 import {
   Avatar,
+  Button,
   CardContent,
   CardMedia,
   ImageList,
@@ -27,6 +28,7 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState([]);
 
   const { userId } = useParams();
+  const currUserId = sessionStorage.getItem("userID");
 
   console.log(userId);
 
@@ -94,13 +96,21 @@ const Profile = () => {
               </div>
 
               <div style={{ display: "flex", gap: "20px" }}>
-                <Avatar variant="rounded" sx={{ height: 30, width: 30 }}>
-                  <EditIcon />
-                </Avatar>
-
-                <Avatar variant="rounded" sx={{ height: 30, width: 30 }}>
-                  <PersonAddAlt1Icon color="success" />
-                </Avatar>
+                {parseInt(currUserId) === parseInt(userId) ? (
+                  // <Avatar variant="rounded" sx={{ height: 30, width: 30 }}>
+                  //   <EditIcon />
+                  // </Avatar>
+                  <Button variant="outlined" color="primary" startIcon={< EditIcon/>}>
+                    Edit
+                  </Button>
+                ) : (
+                  // <Avatar variant="rounded" sx={{ height: 30, width: 30 }}>
+                  //   <PersonAddAlt1Icon color="success" />
+                  // </Avatar>
+                  <Button variant="outlined" color="success" startIcon={< PersonAddAlt1Icon/>}>
+                    Follow
+                  </Button>
+                )}
               </div>
             </div>
 
@@ -128,14 +138,17 @@ const Profile = () => {
           </div>
         </div>
         <div className="bottom">
-          <ImageList sx={{ width: "70%", height: 500 }} cols={3} rowHeight={200} gap={50}
+          <ImageList
+            sx={{ width: "70%", height: 500 }}
+            cols={3}
+            rowHeight={200}
+            gap={50}
           >
-            {
-              posts
-                .filter((post) => post.userId === parseInt(userId))
-                .map((res) => {
-                  return (
-                    <ImageListItem key={res.post_img}>
+            {posts
+              .filter((post) => post.userId === parseInt(userId))
+              .map((res) => {
+                return (
+                  <ImageListItem key={res.post_img}>
                     <img
                       className="userPost"
                       src={`${res.post_img}?w=248&fit=crop&auto=format`}
@@ -144,9 +157,8 @@ const Profile = () => {
                       loading="lazy"
                     />
                   </ImageListItem>
-                  );
-                })
-            }
+                );
+              })}
           </ImageList>
         </div>
       </div>

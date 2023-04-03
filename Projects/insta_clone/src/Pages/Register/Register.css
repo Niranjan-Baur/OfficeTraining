@@ -8,6 +8,13 @@
     justify-content: center;
 }
 
+.registerBody{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly ;
+}
+
 .reg:hover{
     cursor: pointer;
 }
