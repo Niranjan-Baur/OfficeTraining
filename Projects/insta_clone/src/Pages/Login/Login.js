@@ -30,6 +30,7 @@ const Login = () => {
       .then((res) => {
         // console.log(res?.data.message);
         setLoginStatus(res?.data?.message);
+        console.log(res);
 
         if (res?.data?.data) {
           // console.log(res?.data.data[0].email);

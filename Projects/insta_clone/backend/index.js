@@ -32,8 +32,8 @@ app.get("/users", (req, res) => {
     if (err) return res.json(err);
     return res.json(data);
   });
-});
-
+}); 
+ 
 app.get("/posts", (req, res) => {
   const q = `SELECT * FROM post`;
   db.query(q, (err, data) => {
@@ -113,7 +113,7 @@ app.listen(8000, () => {
 app.post("/likeclicked",(req,res)=>{
   const q = "INSERT INTO likes(`userId`,`postId`) VALUES(?)";
   const values = [req.body.userId,req.body.postId]
-
+ 
    db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
     return res.send(data);
